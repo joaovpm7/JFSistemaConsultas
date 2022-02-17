@@ -5,6 +5,10 @@
  */
 package tela;
 
+
+
+
+
 /**
  *
  * @author joao
@@ -15,6 +19,9 @@ public class FormMenu extends javax.swing.JFrame {
      * Creates new form FormMenu
      */
    
+    public long idusuario;
+
+ 
     public FormMenu() {
         initComponents();
     }
@@ -125,6 +132,11 @@ public class FormMenu extends javax.swing.JFrame {
         mnConsultas.add(smnCadastrarConsultas);
 
         smnListarConsultas.setText("Listar");
+        smnListarConsultas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smnListarConsultasActionPerformed(evt);
+            }
+        });
         mnConsultas.add(smnListarConsultas);
 
         jMenuBar1.add(mnConsultas);
@@ -177,6 +189,7 @@ public class FormMenu extends javax.swing.JFrame {
     private void smnCadastrarConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smnCadastrarConsultasActionPerformed
         FormCadConsulta formc = new FormCadConsulta();
         formc.setVisible(true);
+        formc.idusuario = this.idusuario;
     }//GEN-LAST:event_smnCadastrarConsultasActionPerformed
 
     private void smnListarEspecialidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smnListarEspecialidadesActionPerformed
@@ -201,6 +214,12 @@ public class FormMenu extends javax.swing.JFrame {
     private void mnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnSairActionPerformed
         System.exit(0);
     }//GEN-LAST:event_mnSairActionPerformed
+
+    private void smnListarConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smnListarConsultasActionPerformed
+       FormListaConsulta formlc = new FormListaConsulta();
+       formlc.setVisible(true);
+       formlc.idusuario = this.idusuario;
+    }//GEN-LAST:event_smnListarConsultasActionPerformed
 
     /**
      * @param args the command line arguments

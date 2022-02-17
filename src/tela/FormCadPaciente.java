@@ -5,7 +5,6 @@
  */
 package tela;
 
-
 import controle.PacienteControle;
 import java.sql.Date;
 import javax.swing.JOptionPane;
@@ -22,6 +21,20 @@ public class FormCadPaciente extends javax.swing.JFrame {
      */
     public FormCadPaciente() {
         initComponents();
+    }
+
+    public boolean verificarCampos(
+            String conteudo, String erromsg) {
+
+        boolean estaVazio = conteudo.isEmpty();
+        boolean soEspaco = conteudo.equals(" ");
+        if (estaVazio || soEspaco) {
+            JOptionPane.showMessageDialog(this,
+                    erromsg,
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -262,15 +275,39 @@ public class FormCadPaciente extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
 
+        boolean passou = this.verificarCampos(txtNome.getText(), "Campo Nome é Obrigatorio!");
+        if (!passou) {
+            return;
+        }
+        passou = this.verificarCampos(txtIdentidade.getText(), "Campo Identidade é Obrigatorio!");
+        if (!passou) {
+            return;
+        }
+        passou = this.verificarCampos(txtCPF.getText(), "Campo CPF é Obrigatorio!");
+        if (!passou) {
+            return;
+        }
+        passou = this.verificarCampos(txtTelefone.getText(), "Campo Telefone é Obrigatorio!");
+        if (!passou) {
+            return;
+        }
+        passou = this.verificarCampos(txtDDD.getText(), "Campo DDD é Obrigatorio!");
+        if (!passou) {
+            return;
+        }
+        
+
         Paciente p = new Paciente();
         p.setNomeCompleto(txtNome.getText());
         p.setEmail(txtEmail.getText());
         p.setNumIdent(txtIdentidade.getText());
         //data
-        String strdata = txtDataNascimento.getText();
+       String strdata = txtDataNascimento.getText();
         String[] vetdata = strdata.split("[/]");
         String strdataformat = vetdata[2] + "-" + vetdata[1] + "-" + vetdata[0]; //yyy-MM-dd
         p.setDataNascimento(Date.valueOf(strdataformat));
+        
+        
         p.setCpf(txtCPF.getText());
         p.setTelefone(txtTelefone.getText());
         //DDD
@@ -294,7 +331,7 @@ public class FormCadPaciente extends javax.swing.JFrame {
             sexo = "F";
         }
         p.setSexo(sexo);
-        
+
         String textobotao = this.btnCadastrar.getText();
         if (textobotao.equalsIgnoreCase("cadastrar")) {
             boolean cadastrou = PacienteControle.Cadastrar(p);
@@ -306,7 +343,7 @@ public class FormCadPaciente extends javax.swing.JFrame {
                 txtDataNascimento.setText("");
                 txtTelefone.setText("");
                 txtDDD.setText("");
-                
+
                 JOptionPane.showMessageDialog(this, "Cadastro Efetuado com sucesso!", "OK", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, "Cadastro não Efetuado!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -321,8 +358,8 @@ public class FormCadPaciente extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Edição não Efetuada!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
-        
-        
+
+
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void rbtnMasculinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnMasculinoActionPerformed
@@ -330,11 +367,11 @@ public class FormCadPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_rbtnMasculinoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        
+
         btnCadastrar.setText("Alterar");
         long id = Long.parseLong(txtBuscar.getText());
         Paciente pa = PacienteControle.BuscarPorID(id);
-        if (pa.getId() > 0){
+        if (pa.getId() > 0) {
             txtNome.setText(pa.getNomeCompleto());
             txtCPF.setText(pa.getCpf());
             txtTelefone.setText(pa.getTelefone());

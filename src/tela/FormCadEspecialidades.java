@@ -21,6 +21,19 @@ public class FormCadEspecialidades extends javax.swing.JFrame {
     public FormCadEspecialidades() {
         initComponents();
     }
+    public boolean verificarCampos(
+            String conteudo, String erromsg) {
+
+        boolean estaVazio = conteudo.isEmpty();
+        boolean soEspaco = conteudo.equals(" ");
+        if (estaVazio || soEspaco) {
+            JOptionPane.showMessageDialog(this,
+                    erromsg,
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -165,6 +178,16 @@ public class FormCadEspecialidades extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        //verificar campos
+        boolean passou = this.verificarCampos(txtNome.getText(),"Campo Nome é Obrigatório");
+        if(!passou){
+            return;
+        }
+        passou = this.verificarCampos(atxtDescricao.getText(),"Campo Descricão é Obrigatório");
+        if(!passou){
+            return;
+        }
+
         Especialidade e = new Especialidade();
 
         e.setNome(txtNome.getText());

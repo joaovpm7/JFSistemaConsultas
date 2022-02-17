@@ -19,6 +19,19 @@ public class FormLogin extends javax.swing.JFrame {
         initComponents();
     }
 
+    public boolean verificarCampos(
+            String conteudo, String erromsg) {
+
+        boolean estaVazio = conteudo.isEmpty();
+        boolean soEspaco = conteudo.equals(" ");
+        if (estaVazio || soEspaco) {
+            JOptionPane.showMessageDialog(this,
+                    erromsg,
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,14 +108,25 @@ public class FormLogin extends javax.swing.JFrame {
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
 
+        boolean passou = this.verificarCampos(txtLogin.getText(),"Campo Login é Obrigatório");
+        if(!passou){
+            return;
+        }
+        passou = this.verificarCampos(String.valueOf(txtSenha.getPassword()),"Campo Senha é Obrigatório");
+        if(!passou){
+            return;
+        }
+        
         String login = txtLogin.getText();
         String senha = String.valueOf(txtSenha.getPassword());
 
         long user = UsuarioControle.ExisteUsuario(login, senha);
         if (user > 0) {
 
+            
             FormMenu form = new FormMenu();
-
+            form.idusuario = user;
+          
             form.setVisible(true);
             JOptionPane.showMessageDialog(null, "Bem Vindo " + login);
             this.dispose();

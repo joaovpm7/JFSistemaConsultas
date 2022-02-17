@@ -23,6 +23,21 @@ public class FormCadMedico extends javax.swing.JFrame {
     /**
      * Creates new form FormCadastrarMedico
      */
+    
+    public boolean verificarCampos(
+            String conteudo, String erromsg) {
+
+        boolean estaVazio = conteudo.isEmpty();
+        boolean soEspaco = conteudo.equals(" ");
+        if (estaVazio || soEspaco) {
+            JOptionPane.showMessageDialog(this,
+                    erromsg,
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+    
     public Medico pessoa;
 
     public FormCadMedico() {
@@ -272,6 +287,27 @@ public class FormCadMedico extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
 
+        boolean passou = this.verificarCampos(txtNome.getText(), "Campo Nome é Obrigatorio!");
+        if (!passou) {
+            return;
+        }
+        passou = this.verificarCampos(txtCrm.getText(), "Campo Numero CRM é Obrigatorio!");
+        if (!passou) {
+            return;
+        }
+        passou = this.verificarCampos(txtCPF.getText(), "Campo CPF é Obrigatorio!");
+        if (!passou) {
+            return;
+        }
+        passou = this.verificarCampos(txtTelefone.getText(), "Campo Telefone é Obrigatorio!");
+        if (!passou) {
+            return;
+        }
+        passou = this.verificarCampos(txtDDD.getText(), "Campo DDD é Obrigatorio!");
+        if (!passou) {
+            return;
+        }
+    
         Medico med = new Medico();
         med.setNomeCompleto(txtNome.getText());
         med.setNumCrm(txtCrm.getText());
@@ -345,6 +381,13 @@ public class FormCadMedico extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
+        
+        boolean passou = this.verificarCampos(txtID.getText(), "Campo Buscar Medico é Obrigatorio!");
+        if(!passou) {
+            return;
+        }
+        
+        
         btnCadastrar.setText("Alterar");
 
         long id = Long.parseLong(txtID.getText());

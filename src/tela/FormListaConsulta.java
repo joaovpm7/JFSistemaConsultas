@@ -14,6 +14,8 @@ public class FormListaConsulta extends javax.swing.JFrame {
     /**
      * Creates new form FormListaConsulta
      */
+    public long idusuario;
+    
     public FormListaConsulta() {
         initComponents();
     }
